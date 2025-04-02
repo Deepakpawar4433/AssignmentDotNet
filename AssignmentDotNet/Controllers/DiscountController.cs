@@ -54,7 +54,7 @@ namespace AssignmentDotNet.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState); // Return detailed validation errors
+                return BadRequest(ModelState);
             }
             if (id <= 0 || discountDto == null || id != discountDto.Id)
             {

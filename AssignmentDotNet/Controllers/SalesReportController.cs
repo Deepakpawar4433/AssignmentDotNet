@@ -27,5 +27,11 @@ namespace AssignmentDotNet.Controllers
             var report = await _salesReportService.GetBrandWiseSalesReport(fromDate, toDate);
             return Ok(report);
         }
+        [HttpGet("profit-loss")]
+        public async Task<IActionResult> GetProfitLossReport([FromQuery] DateTime currentFromDate, [FromQuery] DateTime currentToDate, [FromQuery] DateTime previousFromDate, [FromQuery] DateTime previousToDate)
+        {
+            var report = await _salesReportService.GetProfitLossReport(currentFromDate, currentToDate, previousFromDate, previousToDate);
+            return Ok(report);
+        }
     }
 }

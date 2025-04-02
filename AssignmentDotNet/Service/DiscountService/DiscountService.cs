@@ -28,7 +28,7 @@ namespace AssignmentDotNet.Service.DiscountService
 
         public async Task<string> AddDiscount(DiscountDto discountDto)
         {
-            // Mobile Id checkent that is exist in the Mobile table or not
+
             var mobileExists = await _context.Mobile.AnyAsync(m => m.Id == discountDto.MobileId);
             if (!mobileExists)
             {
