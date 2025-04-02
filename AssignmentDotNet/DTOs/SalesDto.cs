@@ -15,6 +15,7 @@ namespace AssignmentDotNet.DTOs
         public int Quantity { get; set; }
         [Required]
         public decimal TotalAmount { get; set; }
+        [DataType(DataType.DateTime)]
         public DateTime SalesDate { get; set; }
         [ForeignKey("Discount")]
         public int? DiscountId { get; set; }

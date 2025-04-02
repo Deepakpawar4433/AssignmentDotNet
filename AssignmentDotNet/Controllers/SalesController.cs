@@ -1,5 +1,4 @@
 ﻿using AssignmentDotNet.DTOs;
-using AssignmentDotNet.Model;
 using AssignmentDotNet.Service.SalesService;
 using Microsoft.AspNetCore.Mvc;
 
@@ -49,13 +48,17 @@ namespace AssignmentDotNet.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateSales(int id, [FromBody] Sales sales)
+        public async Task<IActionResult> UpdateSales(int id, [FromBody] SalesDto salesDto)
         {
-            if (id <= 0 || sales == null || id != sales.Id)
+            if (id <= 0 || salesDto == null || id != salesDto.Id)
                 return BadRequest("Invalid sales data or ID mismatch.");
 
-            await _salesService.UpdateSales(sales);
-            return Ok("Sales record updated successfully.");
+            string result = await _salesService.UpdateSales(salesDto);
+
+            if (result == "Sales record not found.")
+                return NotFound(result);
+
+            return Ok(result);
         }
 
         [HttpDelete("{id}")]

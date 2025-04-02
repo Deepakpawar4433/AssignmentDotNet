@@ -56,9 +56,22 @@ namespace AssignmentDotNet.Service.SalesService
             return "Sales record added successfully.";
         }
 
-        public async Task UpdateSales(Sales sales)
+        public async Task<string> UpdateSales(SalesDto salesDto)
         {
-            await _repository.UpdateAsync(sales);
+            var existingSale = await _repository.GetByIdAsync(salesDto.Id);
+            if (existingSale == null)
+            {
+                return "Sales record not found.";
+            }
+
+            existingSale.MobileId = salesDto.MobileId;
+            existingSale.Quantity = salesDto.Quantity;
+            existingSale.TotalAmount = salesDto.TotalAmount;
+            existingSale.SalesDate = salesDto.SalesDate;
+            existingSale.DiscountId = salesDto.DiscountId;
+
+            await _repository.UpdateAsync(existingSale);
+            return "Sales record updated successfully.";
         }
 
         public async Task DeleteSales(int id)

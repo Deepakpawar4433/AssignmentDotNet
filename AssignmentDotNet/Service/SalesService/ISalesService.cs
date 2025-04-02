@@ -8,7 +8,7 @@ namespace AssignmentDotNet.Service.SalesService
         Task<IEnumerable<Sales>> GetAllSales();
         Task<Sales> GetSalesById(int id);
         Task<string> AddSales(SalesDto salesDto);
-        Task UpdateSales(Sales sales);
+        Task<string> UpdateSales(SalesDto salesDto);
         Task DeleteSales(int id);
     }
 }
