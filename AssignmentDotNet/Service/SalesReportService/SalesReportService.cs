@@ -47,33 +47,6 @@ namespace AssignmentDotNet.Service.SalesReportService
                 .ToListAsync<object>();
         }
         //
-        //public async Task<List<object>> GetProfitLossReport(DateTime fromDate, DateTime toDate)
-        //{
-
-        //}
-        public async Task<object> GetProfitLossReport(DateTime currentFromDate, DateTime currentToDate, DateTime previousFromDate, DateTime previousToDate)
-        {
-
-            var currentSalesTotal = await _dbContext.Sales
-                .Where(s => s.SalesDate >= currentFromDate && s.SalesDate <= currentToDate)
-                .SumAsync(s => s.TotalAmount);
-
-
-            var previousSalesTotal = await _dbContext.Sales
-                .Where(s => s.SalesDate >= previousFromDate && s.SalesDate <= previousToDate)
-                .SumAsync(s => s.TotalAmount);
-
-
-            var profitOrLoss = currentSalesTotal - previousSalesTotal;
-
-
-            return new
-            {
-                CurrentSales = currentSalesTotal,
-                PreviousSales = previousSalesTotal,
-                ProfitOrLoss = profitOrLoss
-            };
-        }
-
+        //public async Task<>
     }
 }
