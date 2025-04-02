@@ -47,6 +47,9 @@ namespace AssignmentDotNet.Service.SalesReportService
                 .ToListAsync<object>();
         }
         //
-        //public async Task<>
+        //public async Task<List<object>> GetProfitLossReport(DateTime fromDate, DateTime toDate)
+        //{
+
+        //}
     }
 }
