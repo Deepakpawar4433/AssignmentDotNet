@@ -53,20 +53,20 @@ namespace AssignmentDotNet.Service.SalesReportService
         //}
         public async Task<object> GetProfitLossReport(DateTime currentFromDate, DateTime currentToDate, DateTime previousFromDate, DateTime previousToDate)
         {
-            // Fetch current period sales total
+
             var currentSalesTotal = await _dbContext.Sales
                 .Where(s => s.SalesDate >= currentFromDate && s.SalesDate <= currentToDate)
                 .SumAsync(s => s.TotalAmount);
 
-            // Fetch previous period sales total
+
             var previousSalesTotal = await _dbContext.Sales
                 .Where(s => s.SalesDate >= previousFromDate && s.SalesDate <= previousToDate)
                 .SumAsync(s => s.TotalAmount);
 
-            // Calculate profit or loss
+
             var profitOrLoss = currentSalesTotal - previousSalesTotal;
 
-            // Return the overall report as an object
+
             return new
             {
                 CurrentSales = currentSalesTotal,
