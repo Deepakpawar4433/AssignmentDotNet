@@ -1,0 +1,6 @@
+@AssignmentDotNet_HostAddress = http://localhost:5292
+
+GET {{AssignmentDotNet_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -1,0 +1,69 @@
+﻿using AssignmentDotNet.DTOs;
+using AssignmentDotNet.Model;
+using AssignmentDotNet.Repository;
+using Microsoft.EntityFrameworkCore;
+
+namespace AssignmentDotNet.Service.SalesService
+{
+    public class SalesService : ISalesService
+    {
+        private readonly IRepository<Sales> _repository;
+        private readonly AssignmentDbContext _context;
+
+        public SalesService(IRepository<Sales> salesRepository, AssignmentDbContext dbContext)
+        {
+            _repository = salesRepository;
+            _context = dbContext;
+        }
+
+        public async Task<IEnumerable<Sales>> GetAllSales()
+        {
+            return await _repository.GetAllAsync();
+        }
+
+        public async Task<Sales> GetSalesById(int id)
+        {
+            return await _repository.GetByIdAsync(id);
+        }
+
+        public async Task<string> AddSales(SalesDto salesDto)
+        {
+            // Checking MobileId exist or not
+            var mobileExists = await _context.Mobile.AnyAsync(m => m.Id == salesDto.MobileId);
+            if (!mobileExists)
+            {
+                return "MobileId does not exist in the Mobile table.";
+            }
+            // Checking DiscountId exist or not
+            if (salesDto.DiscountId.HasValue)
+            {
+                var discountExists = await _context.Discount.AnyAsync(d => d.Id == salesDto.DiscountId.Value);
+                if (!discountExists)
+                {
+                    return "DiscountId does not exist in the Discount table.";
+                }
+            }
+            var sales = new Sales
+            {
+                Id = salesDto.Id,
+                MobileId = salesDto.MobileId,
+                Quantity = salesDto.Quantity,
+                TotalAmount = salesDto.TotalAmount,
+                SalesDate = salesDto.SalesDate,
+                DiscountId = salesDto.DiscountId
+            };
+            await _repository.AddAsync(sales);
+            return "Sales record added successfully.";
+        }
+
+        public async Task UpdateSales(Sales sales)
+        {
+            await _repository.UpdateAsync(sales);
+        }
+
+        public async Task DeleteSales(int id)
+        {
+            await _repository.DeleteAsync(id);
+        }
+    }
+}
