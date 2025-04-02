@@ -37,7 +37,6 @@ namespace AssignmentDotNet.Service.SalesReportService
         {
             return await _dbContext.Sales
                 .Where(s => s.SalesDate >= fromDate && s.SalesDate <= toDate)
-                .Include(s => s.Mobile)
                 .GroupBy(s => s.Mobile.Brand)
                 .Select(g => new
                 {
