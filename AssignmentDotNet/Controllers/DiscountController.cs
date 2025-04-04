@@ -37,7 +37,7 @@ namespace AssignmentDotNet.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AdddDiscount([FromBody] DiscountDto discount)
+        public async Task<IActionResult> AddDiscount([FromBody] DiscountDto discount)
         {
             if (discount == null)
                 return BadRequest("Invalid discount data.");
@@ -52,10 +52,7 @@ namespace AssignmentDotNet.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateDiscount(int id, [FromBody] DiscountDto discountDto)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+
             if (id <= 0 || discountDto == null || id != discountDto.Id)
             {
                 return BadRequest("Invalid discount data or ID mismatch.");

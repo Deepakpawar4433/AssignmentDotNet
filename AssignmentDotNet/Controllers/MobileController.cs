@@ -17,7 +17,7 @@ namespace AssignmentDotNet.Controllers
         public async Task<IActionResult> GetMobiles()
         {
             var mobiles = await _mobileService.GetAllMobiles();
-            return Ok(mobiles.ToList());
+            return Ok(mobiles);
         }
         [HttpPost]
         public async Task<IActionResult> AddMobile([FromBody] MobileDto mobile)
@@ -45,23 +45,23 @@ namespace AssignmentDotNet.Controllers
 
             return Ok(mobile);
         }
-        [HttpPut]
-        public async Task<IActionResult> UpdateMobile(MobileDto mobileDto)
-        {
-            if (mobileDto == null || mobileDto.Id <= 0)
-            {
-                return BadRequest("Invalid mobile data.");
-            }
+        //[HttpPut]
+        //public async Task<IActionResult> UpdateMobile(MobileDto mobileDto)
+        //{
+        //    if (mobileDto == null || mobileDto.Id <= 0)
+        //    {
+        //        return BadRequest("Invalid mobile data.");
+        //    }
 
-            string result = await _mobileService.UpdateMobile(mobileDto);
+        //    string result = await _mobileService.UpdateMobile(mobileDto);
 
-            if (result == "Mobile not found.")
-            {
-                return NotFound(result);
-            }
+        //    if (result == "Mobile not found.")
+        //    {
+        //        return NotFound(result);
+        //    }
 
-            return Ok(result);
-        }
+        //    return Ok(result);
+        //}
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateMobile(int id, [FromBody] MobileDto mobileDto)
         {
@@ -88,6 +88,19 @@ namespace AssignmentDotNet.Controllers
             }
             await _mobileService.DeleteMobile(id);
             return Ok("Mobile deleted successfully.");
+        }
+        [HttpGet("best-price/{mobileId}")]
+        public async Task<IActionResult> GetBestPrice(int mobileId)
+        {
+            if (mobileId <= 0)
+                return BadRequest("Invalid Mobile ID.");
+
+            decimal bestPrice = await _mobileService.GetBestPrice(mobileId);
+
+            if (bestPrice == 0)
+                return NotFound("No sales data available for this handset.");
+
+            return Ok(new { MobileId = mobileId, BestPrice = bestPrice });
         }
     }
 }

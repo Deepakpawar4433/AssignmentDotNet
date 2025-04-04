@@ -8,8 +8,9 @@ namespace AssignmentDotNet.Service.MobileService
         Task<IEnumerable<Mobile>> GetAllMobiles();
         Task<Mobile> GetMobileById(int id);
         Task AddMobile(MobileDto mobileDto);
-        Task<string> UpdateMobile(MobileDto mobileDto);
+        //Task<string> UpdateMobile(MobileDto mobileDto);
         Task<string> UpdateMobileById(int id, MobileDto mobileDto);
         Task DeleteMobile(int id);
+        Task<decimal> GetBestPrice(int mobileId);
     }
 }

@@ -61,7 +61,6 @@ namespace AssignmentDotNet.Service.SalesReportService
 
             var profitOrLoss = currentSalesTotal - previousSalesTotal;
 
-
             return new
             {
                 CurrentSales = currentSalesTotal,

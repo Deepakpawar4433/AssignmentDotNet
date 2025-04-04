@@ -45,7 +45,6 @@ namespace AssignmentDotNet.Service.SalesService
             }
             var sales = new Sales
             {
-                Id = salesDto.Id,
                 MobileId = salesDto.MobileId,
                 Quantity = salesDto.Quantity,
                 TotalAmount = salesDto.TotalAmount,
