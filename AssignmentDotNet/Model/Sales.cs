@@ -17,7 +17,7 @@ namespace AssignmentDotNet.Model
         public decimal TotalAmount { get; set; }
         public DateTime SalesDate { get; set; }
         [ForeignKey("Discount")]
-        public int? DiscountId { get; set; }
+        public int DiscountId { get; set; }
         public Discount Discount { get; set; }
     }
 }

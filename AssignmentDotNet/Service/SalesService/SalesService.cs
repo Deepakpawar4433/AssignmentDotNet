@@ -35,13 +35,10 @@ namespace AssignmentDotNet.Service.SalesService
                 return "MobileId does not exist in the Mobile table.";
             }
             // Checking DiscountId exist or not
-            if (salesDto.DiscountId.HasValue)
+            var discountExists = await _context.Discount.AnyAsync(d => d.Id == salesDto.DiscountId);
+            if (!discountExists)
             {
-                var discountExists = await _context.Discount.AnyAsync(d => d.Id == salesDto.DiscountId.Value);
-                if (!discountExists)
-                {
-                    return "DiscountId does not exist in the Discount table.";
-                }
+                return "DiscountId does not exist in the Discount table.";
             }
             var sales = new Sales
             {

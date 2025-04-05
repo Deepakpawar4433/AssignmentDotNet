@@ -18,6 +18,6 @@ namespace AssignmentDotNet.DTOs
         [DataType(DataType.DateTime)]
         public DateTime SalesDate { get; set; }
         [ForeignKey("Discount")]
-        public int? DiscountId { get; set; }
+        public int DiscountId { get; set; }
     }
 }
