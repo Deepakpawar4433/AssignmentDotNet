@@ -6,6 +6,8 @@ using AssignmentDotNet.Service.JwtService;
 using AssignmentDotNet.Service.MobileService;
 using AssignmentDotNet.Service.SalesReportService;
 using AssignmentDotNet.Service.SalesService;
+using AssignmentDotNet.Service.UserRoleService;
+using AssignmentDotNet.Service.UserService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -25,6 +27,8 @@ namespace AssignmentDotNet
             builder.Services.AddScoped<ISalesService, SalesService>();
             builder.Services.AddScoped<IDiscountService, DiscountService>();
             builder.Services.AddScoped<ISalesReportService, SalesReportService>();
+            builder.Services.AddScoped<IUserService, UserService>();
+            builder.Services.AddScoped<IUserRoleService, UserRoleService>();
             builder.Services.AddScoped<IJwtService, JwtService>();
 
             // Add services to the container.

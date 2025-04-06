@@ -1,7 +1,9 @@
-﻿namespace AssignmentDotNet.Service.JwtService
+﻿using AssignmentDotNet.Model;
+
+namespace AssignmentDotNet.Service.JwtService
 {
     public interface IJwtService
     {
-        string GenerateToken(string username);
+        string GenerateToken(User user);
     }
 }

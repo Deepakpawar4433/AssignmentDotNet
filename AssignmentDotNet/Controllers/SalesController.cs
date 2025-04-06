@@ -43,7 +43,7 @@ namespace AssignmentDotNet.Controllers
 
             string result = await _salesService.AddSales(sales);
             if (result == "MobileId does not exist in the Mobile table." || result == "DiscountId does not exist in the Discount table.")
-                return BadRequest("MobileId does not exist in the Mobile table or DiscountId does not exist in the Discount table");
+                return BadRequest(result);
             return Ok("Sales record added successfully.");
         }
 

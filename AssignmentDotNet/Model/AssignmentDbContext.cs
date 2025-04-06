@@ -8,6 +8,8 @@ namespace AssignmentDotNet.Model
         public DbSet<Mobile> Mobile { get; set; }
         public DbSet<Sales> Sales { get; set; }
         public DbSet<Discount> Discount { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<UserRole> UserRole { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Sales>()
@@ -25,6 +27,11 @@ namespace AssignmentDotNet.Model
                 .WithMany(m => m.Discounts)
                 .HasForeignKey(d => d.MobileId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<User>()
+                .HasOne(u => u.UserRole)
+                .WithMany(r => r.User)
+                .HasForeignKey(u => u.RoleId);
 
         }
     }

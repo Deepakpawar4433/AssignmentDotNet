@@ -1,12 +1,13 @@
 ﻿using AssignmentDotNet.DTOs;
 using AssignmentDotNet.Service.DiscountService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AssignmentDotNet.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class DiscountController : ControllerBase
     {
         private readonly IDiscountService _discountService;

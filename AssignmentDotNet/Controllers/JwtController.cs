@@ -1,5 +1,7 @@
-﻿using AssignmentDotNet.Service.JwtService;
+﻿using AssignmentDotNet.Model;
+using AssignmentDotNet.Service.JwtService;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace AssignmentDotNet.Controllers
 {
@@ -7,27 +9,39 @@ namespace AssignmentDotNet.Controllers
     [ApiController]
     public class JwtController : ControllerBase
     {
+        private readonly AssignmentDbContext _context;
         private readonly IJwtService _jwtService;
 
-        public JwtController(IJwtService jwtService)
+        public JwtController(AssignmentDbContext context, IJwtService jwtService)
         {
+            _context = context;
             _jwtService = jwtService;
         }
 
-        [HttpPost("login")]
-        public IActionResult Login([FromBody] LoginModel model)
+        public class LoginModel
         {
-            if (model.Username == "admin" && model.Password == "password")
-            {
-                var token = _jwtService.GenerateToken(model.Username);
-                return Ok(new { Token = token });
-            }
-            return Unauthorized("Invalid credentials");
+            public string Username { get; set; }
+            public string Password { get; set; }
         }
-    }
-    public class LoginModel
-    {
-        public string Username { get; set; }
-        public string Password { get; set; }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] LoginModel model)
+        {
+            var user = await _context.Users
+                .FirstOrDefaultAsync(u => u.Username == model.Username && u.Password == model.Password);
+
+            if (user == null)
+            {
+                return Unauthorized("Invalid username or password.");
+            }
+
+            if (user.RoleId != 1)
+            {
+                return BadRequest("Access denied, please connect with Admin.");
+            }
+
+            var token = _jwtService.GenerateToken(user);
+            return Ok(new { Token = token });
+        }
     }
 }

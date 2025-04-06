@@ -4,6 +4,7 @@ using AssignmentDotNet.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AssignmentDotNet.Migrations
 {
     [DbContext(typeof(AssignmentDbContext))]
-    partial class AssignmentDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250405113502_usertable")]
+    partial class usertable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -126,15 +129,18 @@ namespace AssignmentDotNet.Migrations
                     b.Property<int>("RoleId")
                         .HasColumnType("int");
 
+                    b.Property<int>("UserRoleId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Username")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RoleId");
+                    b.HasIndex("UserRoleId");
 
-                    b.ToTable("Users");
+                    b.ToTable("User");
                 });
 
             modelBuilder.Entity("AssignmentDotNet.Model.UserRole", b =>
@@ -188,7 +194,7 @@ namespace AssignmentDotNet.Migrations
                 {
                     b.HasOne("AssignmentDotNet.Model.UserRole", "UserRole")
                         .WithMany("User")
-                        .HasForeignKey("RoleId")
+                        .HasForeignKey("UserRoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

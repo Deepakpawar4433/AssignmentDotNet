@@ -1,4 +1,5 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using AssignmentDotNet.Model;
+using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -14,12 +15,14 @@ namespace AssignmentDotNet.Service.JwtService
             _configuration = configuration;
         }
 
-        public string GenerateToken(string username)
+        public string GenerateToken(User user)
         {
             var key = Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]);
+
             var claims = new[]
             {
-                new Claim(JwtRegisteredClaimNames.Sub, username),
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Name, user.Username),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
 
